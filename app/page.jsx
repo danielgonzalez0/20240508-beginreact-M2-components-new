@@ -33,20 +33,22 @@ export default function Home() {
               return (
                 <div
                   key={moduleKey}
-                  className="flex flex-col items-center gap-2"
+                  className="card bg-base-300 shadow-xl flex-col items-center"
                 >
-                  <h3 className="text-xl">{moduleKey}</h3>
-                  {Object.entries(value).map(([lessonKey, value]) => {
-                    return (
-                      <Link
-                        href={`/training/${typeKey}/${moduleKey}/${lessonKey}`}
-                        className="link"
-                        key={lessonKey}
-                      >
-                        {lessonKey}
-                      </Link>
-                    );
-                  })}
+                  <div className="card-body flex flex-col items-center gap-2">
+                    <h3 className="card-title">{moduleKey}</h3>
+                    {Object.entries(value).map(([lessonKey]) => {
+                      return (
+                        <Link
+                          href={`/training/${typeKey}/${moduleKey}/${lessonKey}`}
+                          className="link"
+                          key={lessonKey}
+                        >
+                          {lessonKey}
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
               );
             })}

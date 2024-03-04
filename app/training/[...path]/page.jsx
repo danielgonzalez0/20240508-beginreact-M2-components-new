@@ -11,8 +11,16 @@ export default async function Page({ params }) {
     return <div>Not found</div>;
   }
 
+  const currentPath = path.join(
+    process.cwd(),
+    `app/training/[...path]/${fullPath}`
+  );
+
+  await fs.access(currentPath);
+
   const RenderedComponent = dynamic(() => import(`./${fullPath}`), {
     ssr: false,
+
     loading: () => (
       <span className="loading loading-infinity loading-lg"></span>
     ),
@@ -22,21 +30,12 @@ export default async function Page({ params }) {
   const moduleName = params.path[1];
   const exerciseNumber = params.path[2];
 
-  const trainingDirectory = path.join(
-    process.cwd(),
-    `app/instructions/${moduleName}`
-  );
-  const pth = path.join(
-    trainingDirectory,
-    `${exerciseNumber.replace(".jsx", "")}.md`
-  );
-
-  const instruction = await fs.readFile(pth, "utf-8");
-
-  console.log({ instruction });
   return (
     <div className="h-full flex gap-2 relative">
-      <Instruction instruction={instruction} />
+      <TrainingContent
+        moduleName={moduleName}
+        exerciseNumber={exerciseNumber}
+      />
       <div className="mx-auto max-w-4xl flex-1">
         <header className="my-4 flex items-center justify-between">
           <h2 className="text-lg font-bold">
@@ -58,3 +57,22 @@ export default async function Page({ params }) {
     </div>
   );
 }
+
+const TrainingContent = async ({ moduleName, exerciseNumber }) => {
+  try {
+    const trainingDirectory = path.join(
+      process.cwd(),
+      `app/instructions/${moduleName}`
+    );
+    const pth = path.join(
+      trainingDirectory,
+      `${exerciseNumber.replace(".jsx", "")}.md`
+    );
+
+    const instruction = await fs.readFile(pth, "utf-8");
+
+    return <Instruction instruction={instruction} />;
+  } catch {
+    return null;
+  }
+};
