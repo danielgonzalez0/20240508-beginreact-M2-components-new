@@ -17,9 +17,6 @@ export const InstructionToggle = ({ children }) => {
             setOpen(e.target.checked);
           }}
         />
-        <label className="text-xs" htmlFor="toggle-instructions">
-          {open ? "Close" : "Open"} instructions
-        </label>
       </div>
       {open ? <div className="flex-1 mt-12 px-4">{children}</div> : null}
     </>
