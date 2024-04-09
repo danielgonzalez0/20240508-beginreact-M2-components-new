@@ -1,5 +1,5 @@
+import { LessonButton } from "@/src/components/LessonBouton";
 import fs from "fs";
-import Link from "next/link";
 import path from "path";
 
 const trainingDirectory = path.join(process.cwd(), "app/training/[...path]");
@@ -26,26 +26,29 @@ export default function Home() {
     <main className="flex items-center flex-col gap-6">
       {Object.entries(trainingTree).map(([typeKey, value]) => {
         if (value === "file") return;
+        if (typeKey === "solutions") return;
         return (
-          <div key={typeKey} className="flex flex-col items-center gap-4">
+          <div
+            key={typeKey}
+            className="flex w-full flex-col items-center gap-4"
+          >
             <h3 className="text-3xl font-bold">{typeKey}</h3>
             {Object.entries(value).map(([moduleKey, value]) => {
               return (
                 <div
                   key={moduleKey}
-                  className="card bg-base-300 shadow-xl flex-col items-center"
+                  className="card w-full max-w-sm bg-base-300 shadow-xl flex-col items-center"
                 >
-                  <div className="card-body flex flex-col items-center gap-2">
-                    <h3 className="card-title">{moduleKey}</h3>
+                  <div className="card-body w-full  flex flex-col items-center gap-2">
+                    <h3 className="card-title mb-4">{moduleKey}</h3>
                     {Object.entries(value).map(([lessonKey]) => {
                       return (
-                        <Link
-                          href={`/training/${typeKey}/${moduleKey}/${lessonKey}`}
-                          className="link"
+                        <LessonButton
                           key={lessonKey}
-                        >
-                          {lessonKey}
-                        </Link>
+                          typeKey={typeKey}
+                          moduleKey={moduleKey}
+                          lessonKey={lessonKey}
+                        />
                       );
                     })}
                   </div>

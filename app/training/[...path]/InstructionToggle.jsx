@@ -1,13 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { cn } from "@/src/utils/cn";
+import { useLocalStorageState } from "@/src/utils/useLocalStorage";
 
 export const InstructionToggle = ({ children }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useLocalStorageState("open-instruction", false);
 
   return (
-    <>
-      <div className="absolute top-4 left-4 flex items-center gap-1">
+    <div
+      className={cn("pt-2 px-4 flex flex-col", {
+        "flex-1 border-r border-r-neutral": open,
+      })}
+    >
+      <div className="flex items-start m-2">
         <input
           type="checkbox"
           id="toggle-instructions"
@@ -18,7 +23,7 @@ export const InstructionToggle = ({ children }) => {
           }}
         />
       </div>
-      {open ? <div className="flex-1 mt-12 px-4">{children}</div> : null}
-    </>
+      {open ? children : null}
+    </div>
   );
 };
