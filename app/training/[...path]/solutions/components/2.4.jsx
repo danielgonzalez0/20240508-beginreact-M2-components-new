@@ -1,3 +1,5 @@
+// Tu verras ce `"use client"` dû aux limitations de Next.js quant à l'utilisation de hooks dans les composants.
+// Rappelle-toi juste de **toujours l'ajouter si tu utilises un hook**.
 "use client";
 
 import { useState } from "react";
