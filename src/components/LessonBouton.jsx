@@ -5,7 +5,7 @@ import { cn } from "../utils/cn";
 import { useLocalStorageState } from "../utils/useLocalStorage";
 
 export const LessonButton = (props) => {
-  const key = `${props.moduleKey}/${props.lessonKey}`;
+  const key = `${props.moduleKey}/${props.lessonKey.replace(".jsx", "")}`;
   const [state] = useLocalStorageState("lesson-progress", {});
   console.log({ state });
 

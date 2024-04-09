@@ -43,7 +43,6 @@ export default async function Page({ params }) {
 
   const RenderedComponent = dynamic(() => import(`./${fullPath}`), {
     ssr: false,
-
     loading: () => (
       <span className="loading loading-infinity loading-lg"></span>
     ),
