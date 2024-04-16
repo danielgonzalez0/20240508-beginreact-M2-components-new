@@ -54,7 +54,7 @@ export default async function Page({ params }) {
   const exerciseNumber = params.path[2];
 
   return (
-    <div className="h-full flex gap-2 relative">
+    <div className="flex gap-2 relative">
       <TrainingContent
         moduleName={moduleName}
         exerciseNumber={exerciseNumber}

@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
           inter.className,
           GeistMono.variable,
           GeistSans.variable,
-          "h-full flex flex-col bg-base-100"
+          "min-h-full flex flex-col bg-base-100"
         )}
       >
         <Header />

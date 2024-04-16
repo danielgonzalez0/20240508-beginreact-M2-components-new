@@ -8,9 +8,12 @@ export const InstructionToggle = ({ children }) => {
 
   return (
     <div
-      className={cn("pt-2 px-4 flex flex-col", {
+      className={cn("pt-2 px-4 flex flex-col overflow-auto", {
         "flex-1 border-r border-r-neutral": open,
       })}
+      style={{
+        maxHeight: "calc(100vh - 49px)",
+      }}
     >
       <div className="flex items-start m-2">
         <input
