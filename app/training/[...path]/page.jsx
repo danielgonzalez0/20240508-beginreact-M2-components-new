@@ -37,6 +37,7 @@ export default async function Page({ params }) {
 
   const currentSolution = solutions
     .filter((s) => s.startsWith(currentExercice))
+    .filter((s) => s.endsWith(".jsx"))
     .map((s) => s.replace(".jsx", ""));
 
   await fs.access(currentPath);
@@ -68,7 +69,7 @@ export default async function Page({ params }) {
             Done
           </MarkAsDone>
 
-          <details className="dropdown">
+          <details className="dropdown dropdown-end">
             <summary className="m-1 btn btn-sm btn-outline">Solutions</summary>
             <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-200 rounded-box w-52">
               <li>

@@ -7,7 +7,6 @@ import { useLocalStorageState } from "../utils/useLocalStorage";
 export const LessonButton = (props) => {
   const key = `${props.moduleKey}/${props.lessonKey.replace(".jsx", "")}`;
   const [state] = useLocalStorageState("lesson-progress", {});
-  console.log({ state });
 
   const isFinsihed = state[key];
 

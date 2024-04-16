@@ -2,6 +2,7 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "./utils.css";
 
 import { cn } from "@/src/utils/cn";
 import { Header } from "../src/components/Header";
