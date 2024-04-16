@@ -7,7 +7,7 @@ export default function App() {
         <figure>
           <img
             src="/images/shoes-1.png"
-            className="h-32 object-cover object-center w-full"
+            className="h-32 w-full object-cover object-center"
             alt="Shoes"
           />
         </figure>
@@ -24,7 +24,7 @@ export default function App() {
         <figure>
           <img
             src="/images/shoes-2.png"
-            className="h-32 object-cover object-center w-full"
+            className="h-32 w-full object-cover object-center"
             alt="Shoes"
           />
         </figure>
@@ -44,7 +44,7 @@ export default function App() {
         <figure>
           <img
             src="/images/shoes-3.png"
-            className="h-32 object-cover object-center w-full"
+            className="h-32 w-full object-cover object-center"
             alt="Shoes"
           />
         </figure>
@@ -61,7 +61,7 @@ export default function App() {
         <figure>
           <img
             src="/images/shoes-4.png"
-            className="h-32 object-cover object-center w-full"
+            className="h-32 w-full object-cover object-center"
             alt="Shoes"
           />
         </figure>

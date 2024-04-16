@@ -65,7 +65,7 @@ function ShoeCard({ image, title, description, isNew = false, categories }) {
       <figure>
         <img
           src={image}
-          className="h-32 object-cover object-center w-full"
+          className="h-32 w-full object-cover object-center"
           alt="Shoes"
         />
       </figure>

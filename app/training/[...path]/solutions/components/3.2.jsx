@@ -68,7 +68,7 @@ export default function App() {
       <div role="alert" className="alert alert-warning">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="stroke-current shrink-0 h-6 w-6"
+          className="size-6 shrink-0 stroke-current"
           fill="none"
           viewBox="0 0 24 24"
         >
@@ -84,7 +84,7 @@ export default function App() {
           dans le fichier `globals.css` !
         </span>
       </div>
-      <div className="bg-white grid grid-cols-4 flex-col gap-2 p-8 text-black">
+      <div className="grid grid-cols-4 flex-col gap-2 bg-white p-8 text-black">
         <p className="code">Size / color</p>
         <p className="code">Green</p>
         <p className="code">Red</p>

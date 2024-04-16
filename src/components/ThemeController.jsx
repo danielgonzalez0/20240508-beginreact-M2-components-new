@@ -1,10 +1,10 @@
 export const ThemeController = () => {
   return (
-    <label className="btn swap btn-sm swap-rotate">
+    <label className="btn swap swap-rotate btn-sm">
       <input type="checkbox" className="theme-controller" value="fantasy" />
 
       <svg
-        className="swap-on fill-current w-6 h-6"
+        className="swap-on size-6 fill-current"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
@@ -12,7 +12,7 @@ export const ThemeController = () => {
       </svg>
 
       <svg
-        className="swap-off fill-current w-6 h-6"
+        className="swap-off size-6 fill-current"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >

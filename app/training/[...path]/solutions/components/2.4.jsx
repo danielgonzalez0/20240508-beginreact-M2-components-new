@@ -60,7 +60,7 @@ export default function App() {
         <button onClick={shuffleShoesList} className="btn btn-primary ml-auto">
           Shuffle
         </button>
-        <label className="label cursor-pointer flex flex-col gap-1">
+        <label className="label flex cursor-pointer flex-col gap-1">
           <span className="label-text">Enable key</span>
           <input
             type="checkbox"
@@ -103,7 +103,7 @@ function ShoeCard({ image, title, description, isNew = false, categories }) {
       <figure>
         <img
           src={image}
-          className="h-32 object-cover object-center w-full"
+          className="h-32 w-full object-cover object-center"
           alt="Shoes"
         />
       </figure>
@@ -113,7 +113,7 @@ function ShoeCard({ image, title, description, isNew = false, categories }) {
           {isNew ? <NewBadge /> : null}
         </h2>
         <p>{description}</p>
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <div className="flex gap-2">
             {categories.map((category, index) => (
               <div key={index} className="badge badge-outline">
@@ -121,7 +121,7 @@ function ShoeCard({ image, title, description, isNew = false, categories }) {
               </div>
             ))}
           </div>
-          <label className="label cursor-pointer flex flex-col gap-1">
+          <label className="label flex cursor-pointer flex-col gap-1">
             <span className="label-text">Cart</span>
             <input type="checkbox" className="checkbox" />
           </label>

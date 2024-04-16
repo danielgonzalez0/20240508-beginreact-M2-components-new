@@ -23,7 +23,7 @@ const getTrainingTree = (directory) => {
 export default function Home() {
   const trainingTree = getTrainingTree(trainingDirectory);
   return (
-    <main className="flex items-center flex-col gap-6 my-8">
+    <main className="my-8 flex flex-col items-center gap-6">
       {Object.entries(trainingTree).map(([typeKey, value]) => {
         if (value === "file") return;
         if (typeKey === "solutions") return;
@@ -37,9 +37,9 @@ export default function Home() {
               return (
                 <div
                   key={moduleKey}
-                  className="card w-full max-w-sm bg-base-300 shadow-xl flex-col items-center"
+                  className="card w-full max-w-sm flex-col items-center bg-base-300 shadow-xl"
                 >
-                  <div className="card-body w-full  flex flex-col items-center gap-2">
+                  <div className="card-body flex  w-full flex-col items-center gap-2">
                     <h3 className="card-title mb-4">{moduleKey}</h3>
                     {Object.entries(value).map(([lessonKey]) => {
                       return (

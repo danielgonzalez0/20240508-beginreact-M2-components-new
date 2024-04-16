@@ -25,7 +25,7 @@ const Badge = ({ size, variant, children }) => {
 
 export default function App() {
   return (
-    <div className="bg-white grid grid-cols-4 flex-col gap-2 p-8 text-black">
+    <div className="grid grid-cols-4 flex-col gap-2 bg-white p-8 text-black">
       <p className="code">Size / color</p>
       <p className="code">Green</p>
       <p className="code">Red</p>

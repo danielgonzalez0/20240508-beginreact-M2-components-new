@@ -36,6 +36,8 @@
 // - fontWeight: "500"
 // - width: "fit-content"
 
+// 💣 Supprime cette ligne
+// eslint-disable-next-line no-unused-vars
 const Badge = ({ size, variant, children }) => {
   return (
     <span
@@ -52,7 +54,7 @@ const Badge = ({ size, variant, children }) => {
 
 export default function App() {
   return (
-    <div className="bg-white grid grid-cols-4 flex-col gap-2 p-8 text-black">
+    <div className="grid grid-cols-4 flex-col gap-2 bg-white p-8 text-black">
       <p>Size / color</p>
       <p>Green</p>
       <p>Red</p>

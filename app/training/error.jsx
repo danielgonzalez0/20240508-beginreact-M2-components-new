@@ -9,7 +9,7 @@ export default function Error({ error }) {
   }, [error]);
 
   return (
-    <div className="card w-96 bg-base-200 shadow-xl m-auto">
+    <div className="card m-auto w-96 bg-base-200 shadow-xl">
       <div className="card-body items-center text-center">
         <h2 className="card-title">Path not found</h2>
 

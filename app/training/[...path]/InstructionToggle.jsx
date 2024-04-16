@@ -15,7 +15,7 @@ export const InstructionToggle = ({ children }) => {
         maxHeight: "calc(100vh - 49px)",
       }}
     >
-      <div className="flex items-start m-2">
+      <div className="m-2 flex items-start">
         <input
           type="checkbox"
           id="toggle-instructions"

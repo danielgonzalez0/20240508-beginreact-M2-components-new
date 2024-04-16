@@ -54,14 +54,14 @@ export default async function Page({ params }) {
   const exerciseNumber = params.path[2];
 
   return (
-    <div className="flex gap-2 relative">
+    <div className="relative flex gap-2">
       <TrainingContent
         moduleName={moduleName}
         exerciseNumber={exerciseNumber}
       />
-      <div className="mx-auto max-w-4xl px-4 flex-1">
+      <div className="mx-auto max-w-4xl flex-1 px-4">
         <header className="my-4 flex items-center gap-4">
-          <h2 className="text-lg font-bold mr-auto">
+          <h2 className="mr-auto text-lg font-bold">
             {type} - {moduleName} - {exerciseNumber}
           </h2>
 
@@ -70,8 +70,8 @@ export default async function Page({ params }) {
           </MarkAsDone>
 
           <details className="dropdown dropdown-end">
-            <summary className="m-1 btn btn-sm btn-outline">Solutions</summary>
-            <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-200 rounded-box w-52">
+            <summary className="btn btn-outline btn-sm m-1">Solutions</summary>
+            <ul className="menu dropdown-content z-[1] w-52 rounded-box bg-base-200 p-2 shadow">
               <li>
                 <Link
                   href={`/training/exercices/${moduleName}/${currentExercice}.jsx`}
@@ -89,7 +89,7 @@ export default async function Page({ params }) {
             </ul>
           </details>
         </header>
-        <div className="border-dashed border border-accent rounded-md p-4">
+        <div className="rounded-md border border-dashed border-accent p-4">
           <RenderedComponent />
         </div>
       </div>
