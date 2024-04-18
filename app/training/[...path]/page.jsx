@@ -61,7 +61,7 @@ export default async function Page({ params }) {
       />
       <div className="mx-auto max-w-4xl flex-1 px-4">
         <header className="my-4 flex items-center gap-4">
-          <h2 className="mr-auto text-lg font-bold">
+          <h2 className="mr-auto  font-mono text-xs font-bold lg:text-lg">
             {type} - {moduleName} - {exerciseNumber}
           </h2>
 

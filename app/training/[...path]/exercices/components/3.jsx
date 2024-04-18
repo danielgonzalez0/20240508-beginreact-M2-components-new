@@ -55,11 +55,11 @@ const Badge = ({ size, variant, children }) => {
 export default function App() {
   return (
     <div className="grid grid-cols-4 flex-col gap-2 bg-white p-8 text-black">
-      <p>Size / color</p>
-      <p>Green</p>
-      <p>Red</p>
-      <p>Purple</p>
-      <p>lg</p>
+      <p className="code">Size / color</p>
+      <p className="code">Green</p>
+      <p className="code">Red</p>
+      <p className="code">Purple</p>
+      <p className="code">lg</p>
       <Badge size="lg" variant="green">
         New
       </Badge>

@@ -8,7 +8,7 @@ export const InstructionToggle = ({ children }) => {
 
   return (
     <div
-      className={cn("pt-2 px-4 flex flex-col overflow-auto", {
+      className={cn("pt-2 px-4 flex flex-col overflow-auto max-lg:hidden", {
         "flex-1 border-r border-r-neutral": open,
       })}
       style={{

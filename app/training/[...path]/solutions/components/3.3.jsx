@@ -17,7 +17,7 @@ const Badge = ({ size, variant, children }) => {
   const colorClassName = COLORS[variant] || COLORS.red;
 
   return (
-    <span className={clsx("badge", sizeClassName, colorClassName)}>
+    <span className={clsx(styles.badge, sizeClassName, colorClassName)}>
       {children}
     </span>
   );

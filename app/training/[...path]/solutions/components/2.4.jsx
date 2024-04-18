@@ -2,7 +2,7 @@
 // Rappelle-toi juste de **toujours l'ajouter si tu utilises un hook**.
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const getInitialShoesList = () => [
   {
@@ -53,12 +53,47 @@ export default function App() {
     });
   };
 
+  // on "s", shuffle the list
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "s") {
+        shuffleShoesList();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const onAddNewShoe = () => {
+    setShoesList((prev) => [
+      ...prev,
+      {
+        isNew: true,
+        image: "/images/shoes-5.png",
+        title: "New Shoes",
+        description: "This is the new shoes.",
+        categories: ["New", "Trendy"],
+      },
+    ]);
+  };
+
+  const onDelete = (i) => {
+    setShoesList((prev) => prev.filter((_, index) => index !== i));
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center">
         <h2 className="text-4xl">{enableKeys ? "With" : "Without"} keys</h2>
-        <button onClick={shuffleShoesList} className="btn btn-primary ml-auto">
+        <button
+          onClick={shuffleShoesList}
+          className="btn btn-primary btn-sm ml-auto"
+        >
           Shuffle
+        </button>
+        <button onClick={onAddNewShoe} className="btn btn-primary btn-sm">
+          Add
         </button>
         <label className="label flex cursor-pointer flex-col gap-1">
           <span className="label-text">Enable key</span>
@@ -71,15 +106,15 @@ export default function App() {
         </label>
       </div>
       <ShoesList>
-        {shoesList.map((shoe) => (
+        {shoesList.map((shoe, index) => (
           // eslint-disable-next-line react/jsx-key
           <ShoeCard
-            key={enableKeys ? shoe.title : undefined}
-            isNew={shoe.isNew}
+            key={enableKeys ? index : undefined}
             image={shoe.image}
             title={shoe.title}
             description={shoe.description}
             categories={shoe.categories}
+            onDelete={() => onDelete(shoesList.indexOf(shoe))}
           />
         ))}
       </ShoesList>
@@ -93,11 +128,7 @@ function ShoesList({ children }) {
   );
 }
 
-function NewBadge() {
-  return <div className="badge badge-secondary">NEW</div>;
-}
-
-function ShoeCard({ image, title, description, isNew = false, categories }) {
+function ShoeCard({ image, title, description, categories, onDelete }) {
   return (
     <div className="card w-full bg-base-300 shadow-xl">
       <figure>
@@ -108,10 +139,7 @@ function ShoeCard({ image, title, description, isNew = false, categories }) {
         />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">
-          {title}
-          {isNew ? <NewBadge /> : null}
-        </h2>
+        <input value={title} className="card-title" />
         <p>{description}</p>
         <div className="flex items-center justify-between">
           <div className="flex gap-2">
@@ -125,6 +153,12 @@ function ShoeCard({ image, title, description, isNew = false, categories }) {
             <span className="label-text">Cart</span>
             <input type="checkbox" className="checkbox" />
           </label>
+          <button
+            className="btn btn-outline btn-primary btn-sm"
+            onClick={onDelete}
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>
