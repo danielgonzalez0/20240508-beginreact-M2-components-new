@@ -69,7 +69,7 @@ export default function App() {
       <Badge size="lg" variant="purple">
         New
       </Badge>
-      <p>default</p>
+      <p className="code">default</p>
       <Badge size="default" variant="green">
         New
       </Badge>
