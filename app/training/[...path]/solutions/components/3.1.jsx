@@ -35,7 +35,6 @@ const Badge = ({ size, variant, children }) => {
         fontWeight: "500",
         width: "fit-content",
         fontSize: "14px",
-
         ...sizeStyle,
         ...colorStyle,
       }}
