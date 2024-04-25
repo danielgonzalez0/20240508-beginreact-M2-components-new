@@ -106,10 +106,10 @@ export default function App() {
         </label>
       </div>
       <ShoesList>
-        {shoesList.map((shoe, index) => (
+        {shoesList.map((shoe) => (
           // eslint-disable-next-line react/jsx-key
           <ShoeCard
-            key={enableKeys ? index : undefined}
+            key={enableKeys ? shoe.title : undefined}
             image={shoe.image}
             title={shoe.title}
             description={shoe.description}
