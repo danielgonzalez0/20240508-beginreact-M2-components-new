@@ -12,10 +12,20 @@ const NameForm = ({ initialName }) => {
         <div className="card-body items-center text-center">
           <h2 className="card-title">Name :</h2>
           {name ? <p>{name}</p> : <p className="text-error">No name</p>}
+          {name !== initialName ? (
+            <button
+              className="btn btn-warning btn-sm"
+              onClick={() => {
+                setName("");
+              }}
+            >
+              Reset
+            </button>
+          ) : null}
         </div>
       </div>
       <div className="divider">Form</div>
-      <label className="input input-bordered  flex items-center gap-2">
+      <label className="input input-bordered flex items-center gap-2">
         <User2 size={16} />
         <input
           type="text"
@@ -31,8 +41,7 @@ const NameForm = ({ initialName }) => {
 
 export default function App() {
   return (
-    <div>
-      <NameForm initialName={"Melvyn"} />
+    <div className="flex flex-col gap-8">
       <NameForm initialName={"Jean"} />
     </div>
   );

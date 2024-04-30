@@ -1,49 +1,38 @@
-// @ts-nocheck
 "use client";
 
-import clsx from "clsx";
+import { User2 } from "lucide-react";
+import { useState } from "react";
 
-const Button = ({ children, variant, id }) => {
-  const buttonClass = clsx("btn ring-offset-2 ring-offset-base-100", {
-    "btn-primary": variant === "primary",
-    "btn-error": variant === "error",
-    "btn-success": variant === "success",
-    "btn-warning": variant === "warning",
-  });
+const NameForm = () => {
+  const [name, setName] = useState("");
 
   return (
-    <button className={buttonClass} id={id}>
-      {children}
-    </button>
+    <div className="flex flex-col items-center justify-center">
+      <div className="card w-full max-w-96 bg-neutral text-neutral-content">
+        <div className="card-body items-center text-center">
+          <h2 className="card-title">Name :</h2>
+          {name ? <p>{name}</p> : <p className="text-error">No name</p>}
+        </div>
+      </div>
+      <div className="divider">Form</div>
+      <label className="input input-bordered flex items-center gap-2">
+        <User2 size={16} />
+        <input
+          type="text"
+          className="grow"
+          placeholder="Enter your name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+    </div>
   );
 };
 
 export default function App() {
   return (
-    <div
-      onClick={(e) => {
-        const target = e.target;
-
-        if (target === e.currentTarget) {
-          alert(`You clicked on the container`);
-        } else {
-          alert(`You clicked on ${target.id}`);
-        }
-      }}
-      className="flex flex-wrap gap-4 p-4"
-    >
-      <Button variant={"primary"} id="eat-me">
-        Eat me
-      </Button>
-      <Button variant={"error"} id="love-me">
-        Love me
-      </Button>
-      <Button variant={"success"} id="drink-me">
-        Drink me
-      </Button>
-      <Button variant={"warning"} id="leave-me">
-        Eat me
-      </Button>
+    <div>
+      <NameForm />
     </div>
   );
 }
