@@ -1,9 +1,9 @@
 import { MarkAsDone } from "@/src/components/MarkAsDone";
 import fs from "fs/promises";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import path from "path";
-import { Instruction } from "./Instruction";
+import { Instruction } from "../../../src/components/Instruction";
+import { PageComponent } from "./PageComponent";
 
 export async function generateMetadata({ params }) {
   return {
@@ -41,13 +41,6 @@ export default async function Page({ params }) {
     .map((s) => s.replace(".jsx", ""));
 
   await fs.access(currentPath);
-
-  const RenderedComponent = dynamic(() => import(`./${fullPath}`), {
-    ssr: false,
-    loading: () => (
-      <span className="loading loading-infinity loading-lg"></span>
-    ),
-  });
 
   const type = params.path[0];
   const moduleName = params.path[1];
@@ -90,7 +83,7 @@ export default async function Page({ params }) {
           </details>
         </header>
         <div className="rounded-md border border-dashed border-accent p-4">
-          <RenderedComponent />
+          <PageComponent fullPath={fullPath} />
         </div>
       </div>
     </div>
