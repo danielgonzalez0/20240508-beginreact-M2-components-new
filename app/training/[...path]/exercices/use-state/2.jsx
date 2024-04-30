@@ -2,7 +2,7 @@
 
 import { User2 } from "lucide-react";
 
-export default function App() {
+function NameForm() {
   // 🦁 Ajoute un `useState` pour le nom
   // 💡 useState("")
 
@@ -25,6 +25,14 @@ export default function App() {
         {/* 💡 onChange={e => e.target.value} : pour récupérer la value */}
         <input type="text" className="grow" placeholder="Melvynx" />
       </label>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <div>
+      <NameForm />
     </div>
   );
 }

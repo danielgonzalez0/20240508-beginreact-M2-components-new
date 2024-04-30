@@ -12,7 +12,7 @@ const NameForm = ({ initialName }) => {
         <div className="card-body items-center text-center">
           <h2 className="card-title">Name :</h2>
           {name ? <p>{name}</p> : <p className="text-error">No name</p>}
-          {name ? (
+          {name !== initialName ? (
             <button
               className="btn btn-warning btn-sm"
               onClick={() => {
