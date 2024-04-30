@@ -8,7 +8,7 @@ const NameForm = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="card w-96 bg-neutral text-neutral-content">
+      <div className="card w-full max-w-96 bg-neutral text-neutral-content">
         <div className="card-body items-center text-center">
           <h2 className="card-title">Name :</h2>
           {name ? <p>{name}</p> : <p className="text-error">No name</p>}
