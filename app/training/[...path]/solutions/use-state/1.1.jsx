@@ -30,7 +30,7 @@ export default function App() {
           alert(`You clicked on ${target.id}`);
         }
       }}
-      className="flex gap-4 p-4"
+      className="flex flex-wrap gap-4 p-4"
     >
       <Button variant={"primary"} id="eat-me">
         Eat me

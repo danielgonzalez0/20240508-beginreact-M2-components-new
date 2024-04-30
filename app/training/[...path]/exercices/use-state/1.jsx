@@ -27,7 +27,7 @@ export default function App() {
       // Si `target` === `currentTarget` = container
       // Sinon = id de l'élément cliqué
       // Affiche une `alert` avec `alert`
-      className="flex gap-4 p-4"
+      className="flex flex-wrap gap-4 p-4"
     >
       <Button variant={"primary"} id="eat-me">
         Eat me

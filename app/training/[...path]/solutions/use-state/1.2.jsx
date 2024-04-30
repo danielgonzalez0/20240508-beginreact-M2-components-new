@@ -30,7 +30,7 @@ export default function App() {
           alert(`You clicked on the container`);
         }
       }}
-      className="flex gap-4 p-4"
+      className="flex flex-wrap gap-4 p-4"
     >
       <Button
         onClick={(id) => onClickButton(id)}
