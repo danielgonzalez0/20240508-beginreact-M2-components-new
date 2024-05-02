@@ -1,120 +1,75 @@
 "use client";
 
 import { cn } from "@/src/utils/cn";
-import clsx from "clsx";
 import { Plus, Trash } from "lucide-react";
 import { useState } from "react";
 
 const useTodos = () => {
   const [todos, setTodos] = useState([
-    { id: 111, text: "Learn React", completed: false },
-    { id: 222, text: "Learn useState", completed: true },
+    {
+      id: 1112,
+      text: "Faire les courses",
+      completed: false,
+    },
+    {
+      id: 2222,
+      text: "Aller dormir à 22h",
+      completed: true,
+    },
   ]);
 
-  const addTodo = (text) => {
-    setTodos([...todos, { id: Date.now(), text, completed: false }]);
+  const addTodo = (todo) => {
+    const newTodo = {
+      id: Date.now(),
+      text: todo,
+      completed: false,
+    };
+    const newTodos = [...todos, newTodo];
+    setTodos(newTodos);
   };
 
   const updateTodo = (id, newTodo) => {
-    setTodos(
-      todos.map((todo) => (todo.id === id ? { ...todo, ...newTodo } : todo))
-    );
+    const newTodos = todos.map((todo) => {
+      if (todo.id !== id) return todo;
+      return newTodo;
+    });
+    setTodos(newTodos);
   };
 
-  const removeTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+  const deleteTodo = (id) => {
+    const newTodos = todos.filter((todo) => {
+      console.log("todo", todo.id, id);
+      return todo.id !== id;
+    });
+    console.log({ newTodos });
+    setTodos(newTodos);
   };
 
-  return { todos, addTodo, updateTodo, removeTodo };
-};
-
-const TodoItem = ({ todo, updateTodo, removeTodo }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  return (
-    <li className="flex w-full items-center gap-2">
-      <div
-        className={clsx("input flex flex-1 items-center gap-2", {
-          "input-bordered": Boolean(isEditing),
-        })}
-      >
-        <input
-          type="checkbox"
-          className="checkbox checkbox-sm"
-          checked={todo.completed}
-          onChange={() => updateTodo(todo.id, { completed: !todo.completed })}
-        />
-        {isEditing ? (
-          <input
-            type="text"
-            className="grow"
-            value={todo.text}
-            onChange={(e) => updateTodo(todo.id, { text: e.target.value })}
-            onBlur={() => setIsEditing(false)}
-          />
-        ) : (
-          <p
-            className={cn({
-              "line-through": todo.completed,
-            })}
-            onClick={() => setIsEditing(true)}
-          >
-            {todo.text}
-          </p>
-        )}
-      </div>
-      <button className="btn btn-ghost" onClick={() => removeTodo(todo.id)}>
-        <Trash size={16} />
-      </button>
-    </li>
-  );
-};
-
-const TodoForm = ({ addTodo }) => {
-  const [todo, setTodo] = useState("");
-
-  const handleAddTodo = (event) => {
-    event.preventDefault();
-    if (todo.trim()) {
-      addTodo(todo);
-      setTodo("");
-    }
+  return {
+    todos,
+    updateTodo,
+    addTodo,
+    deleteTodo,
   };
-
-  return (
-    <div className="flex w-full items-center gap-2">
-      <label className="input input-bordered flex flex-1 items-center gap-2">
-        <input
-          type="text"
-          className="grow"
-          placeholder="Some task"
-          value={todo}
-          onChange={(e) => setTodo(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleAddTodo(e)}
-        />
-      </label>
-      <button className="btn btn-primary" onClick={handleAddTodo}>
-        <Plus size={22} />
-      </button>
-    </div>
-  );
 };
 
-const Todos = () => {
-  const { todos, addTodo, updateTodo, removeTodo } = useTodos();
+// Render
+export const Todos = () => {
+  const { addTodo, deleteTodo, updateTodo, todos } = useTodos();
 
   return (
     <div className="card w-full max-w-md border border-base-300 bg-base-200 shadow-xl">
       <div className="card-body">
         <h2 className="card-title">Todos</h2>
-        <TodoForm addTodo={addTodo} />
+        <TodoForm onAddTodo={addTodo} />
         <div className="divider">List</div>
         <ul className="space-y-2">
           {todos.map((todo) => (
             <TodoItem
               key={todo.id}
               todo={todo}
+              deleteTodo={deleteTodo}
               updateTodo={updateTodo}
-              removeTodo={removeTodo}
             />
           ))}
           {todos.length === 0 ? (
@@ -126,9 +81,102 @@ const Todos = () => {
   );
 };
 
+const TodoForm = ({ onAddTodo }) => {
+  const [todo, setTodo] = useState("");
+
+  const handleAddTodo = () => {
+    onAddTodo(todo);
+    setTodo("");
+  };
+
+  return (
+    <div className="flex w-full items-center gap-2">
+      <label className="input input-bordered flex flex-1 items-center gap-2">
+        <input
+          type="checkbox"
+          checked={false}
+          className="checkbox checkbox-sm"
+        />
+        <input
+          value={todo}
+          onChange={(e) => {
+            setTodo(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleAddTodo();
+            }
+          }}
+          type="text"
+          className="grow"
+          placeholder="Some task"
+        />
+      </label>
+      <button onClick={() => handleAddTodo()} className="btn btn-primary">
+        <Plus size={22} />
+      </button>
+    </div>
+  );
+};
+
+const TodoItem = ({ todo, deleteTodo, updateTodo }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  return (
+    <li className="flex w-full items-center gap-2" key={todo.id}>
+      <div
+        className={cn("input flex flex-1 items-center gap-2", {
+          "input-bordered": isEditing,
+        })}
+      >
+        <input
+          onChange={() => {
+            const newCompleted = !todo.completed;
+            updateTodo(todo.id, {
+              ...todo,
+              completed: newCompleted,
+            });
+          }}
+          checked={todo.completed}
+          type="checkbox"
+          className="checkbox checkbox-sm"
+        />
+        {isEditing ? (
+          <input
+            ref={(r) => r?.focus()}
+            onBlur={(e) => {
+              const newValue = e.target.value;
+              updateTodo(todo.id, {
+                ...todo,
+                text: newValue,
+              });
+              setIsEditing(false);
+            }}
+            defaultValue={todo.text}
+          />
+        ) : (
+          <p
+            onClick={() => {
+              setIsEditing(true);
+            }}
+            className={cn({
+              "line-through text-neutral-content": todo.completed,
+            })}
+          >
+            {todo.text}
+          </p>
+        )}
+      </div>
+
+      <button onClick={() => deleteTodo(todo.id)} className="btn btn-ghost">
+        <Trash size={16} />
+      </button>
+    </li>
+  );
+};
+
 export default function App() {
   return (
-    <div className="flex justify-center">
+    <div className="flex w-full justify-center">
       <Todos />
     </div>
   );

@@ -7,49 +7,58 @@ import { useState } from "react";
 const useTodos = () => {
   const [todos, setTodos] = useState([
     {
-      id: 111,
-      text: "Learn React",
+      id: 1112,
+      text: "Faire les courses",
       completed: false,
     },
     {
-      id: 222,
-      text: "Learn useState",
+      id: 2222,
+      text: "Aller dormir à 22h",
       completed: true,
     },
   ]);
 
-  const addTodo = (text) => {
-    const newTodo = { id: Date.now(), text, completed: false };
-    setTodos((todos) => [...todos, newTodo]);
+  const addTodo = (todo) => {
+    const newTodo = {
+      id: Date.now(),
+      text: todo,
+      completed: false,
+    };
+    const newTodos = [...todos, newTodo];
+    setTodos(newTodos);
   };
 
-  const updateTodo = (id) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    );
-    setTodos(updatedTodos);
+  const updateTodo = (id, newTodo) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id !== id) return todo;
+      return newTodo;
+    });
+    setTodos(newTodos);
   };
 
-  const removeTodo = (id) => {
-    const filteredTodos = todos.filter((todo) => todo.id !== id);
-    setTodos(filteredTodos);
+  const deleteTodo = (id) => {
+    const newTodos = todos.filter((todo) => {
+      console.log("todo", todo.id, id);
+      return todo.id !== id;
+    });
+    console.log({ newTodos });
+    setTodos(newTodos);
   };
 
   return {
     todos,
-    addTodo,
     updateTodo,
-    removeTodo,
+    addTodo,
+    deleteTodo,
   };
 };
 
+// Render
 export const Todos = () => {
   const [todo, setTodo] = useState("");
-  const { todos, addTodo, updateTodo, removeTodo } = useTodos();
+  const { addTodo, deleteTodo, updateTodo, todos } = useTodos();
 
-  const handleAddTodo = (event) => {
-    event.preventDefault();
-    if (todo.trim() === "") return;
+  const handleAddTodo = () => {
     addTodo(todo);
     setTodo("");
   };
@@ -61,45 +70,58 @@ export const Todos = () => {
         <div className="flex w-full items-center gap-2">
           <label className="input input-bordered flex flex-1 items-center gap-2">
             <input
+              type="checkbox"
+              checked={false}
+              className="checkbox checkbox-sm"
+            />
+            <input
+              value={todo}
+              onChange={(e) => {
+                setTodo(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleAddTodo();
+                }
+              }}
               type="text"
               className="grow"
               placeholder="Some task"
-              value={todo}
-              onChange={(e) => setTodo(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleAddTodo(e);
-                }
-              }}
             />
           </label>
-          <button className="btn btn-primary" onClick={handleAddTodo}>
+          <button onClick={() => handleAddTodo()} className="btn btn-primary">
             <Plus size={22} />
           </button>
         </div>
         <div className="divider">List</div>
         <ul className="space-y-2">
           {todos.map((todo) => (
-            <li key={todo.id} className="flex w-full items-center gap-2">
+            <li className="flex w-full items-center gap-2" key={todo.id}>
               <label className="input input-bordered flex flex-1 items-center gap-2">
                 <input
+                  onChange={() => {
+                    const newCompleted = !todo.completed;
+                    updateTodo(todo.id, {
+                      ...todo,
+                      completed: newCompleted,
+                    });
+                  }}
+                  checked={todo.completed}
                   type="checkbox"
                   className="checkbox checkbox-sm"
-                  checked={todo.completed}
-                  onChange={() => updateTodo(todo.id)}
                 />
-
                 <p
                   className={cn({
-                    "line-through": todo.completed,
+                    "line-through text-neutral-content": todo.completed,
                   })}
                 >
                   {todo.text}
                 </p>
               </label>
+
               <button
+                onClick={() => deleteTodo(todo.id)}
                 className="btn btn-ghost"
-                onClick={() => removeTodo(todo.id)}
               >
                 <Trash size={16} />
               </button>

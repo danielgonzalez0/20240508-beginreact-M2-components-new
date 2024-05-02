@@ -6,23 +6,23 @@ import { useState } from "react";
 export const Todos = () => {
   const [todos, setTodos] = useState([
     {
-      id: 111,
-      text: "Learn React",
+      id: 1222919191,
+      text: "Faire les courses",
       completed: false,
-    },
-    {
-      id: 222,
-      text: "Learn useState",
-      completed: true,
     },
   ]);
   const [todo, setTodo] = useState("");
 
-  const addTodo = (event) => {
-    event.preventDefault();
-    if (todo.trim() === "") return;
-    const newTodo = { id: Date.now(), text: todo, completed: false };
-    setTodos([...todos, newTodo]);
+  console.log({ todo });
+
+  const addTodo = () => {
+    const newTodo = {
+      id: Date.now(),
+      text: todo,
+      completed: false,
+    };
+    const newTodos = [...todos, newTodo];
+    setTodos(newTodos);
     setTodo("");
   };
 
@@ -33,30 +33,39 @@ export const Todos = () => {
         <div className="flex w-full items-center gap-2">
           <label className="input input-bordered flex flex-1 items-center gap-2">
             <input
-              type="text"
-              className="grow"
-              placeholder="Some task"
+              type="checkbox"
+              checked={false}
+              className="checkbox checkbox-sm"
+            />
+            <input
               value={todo}
               onChange={(e) => {
                 setTodo(e.target.value);
               }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  addTodo(e);
+                  addTodo();
                 }
               }}
+              type="text"
+              className="grow"
+              placeholder="Some task"
             />
           </label>
-          <button className="btn btn-primary" onClick={addTodo}>
+          <button onClick={() => addTodo()} className="btn btn-primary">
             <Plus size={22} />
           </button>
         </div>
         <div className="divider">List</div>
         <ul className="space-y-2">
           {todos.map((todo) => (
-            <li key={todo.id} className="flex w-full items-center gap-2">
+            <li className="flex w-full items-center gap-2" key={todo.id}>
               <label className="input input-bordered flex flex-1 items-center gap-2">
-                <input type="checkbox" className="checkbox checkbox-sm" />
+                <input
+                  checked={todo.completed}
+                  type="checkbox"
+                  className="checkbox checkbox-sm"
+                />
                 <p>{todo.text}</p>
               </label>
             </li>
