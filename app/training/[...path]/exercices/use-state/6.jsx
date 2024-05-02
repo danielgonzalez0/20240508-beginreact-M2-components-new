@@ -19,15 +19,15 @@ export const Todos = () => {
         <h2 className="card-title">Todos</h2>
         <div className="flex w-full items-center gap-2">
           <label className="input input-bordered flex flex-1 items-center gap-2">
-            {/* 🦁 Ajoute un état "Todo" et contrôle l'input */}
             <input
               type="checkbox"
               checked={false}
               className="checkbox checkbox-sm"
             />
-            {/* 🦁 Lors du clic sur le bouton, appelle la méthode "addTodo" */}
+            {/* 🦁 Ajoute un état "Todo" et contrôle l'input */}
             <input type="text" className="grow" placeholder="Some task" />
           </label>
+          {/* 🦁 Lors du clic sur le bouton, appelle la méthode "addTodo" */}
           <button className="btn btn-primary">
             <Plus size={22} />
           </button>
