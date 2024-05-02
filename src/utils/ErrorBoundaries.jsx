@@ -26,9 +26,7 @@ export class ErrorBoundaries extends Component {
             <h2 className="card-title">Error</h2>
 
             <div className="rounded-md bg-base-100 p-4">
-              <pre>
-                <code>{this.state.error?.message}</code>
-              </pre>
+              <code className="text-wrap">{this.state.error?.message}</code>
             </div>
 
             <div className="card-actions justify-end">

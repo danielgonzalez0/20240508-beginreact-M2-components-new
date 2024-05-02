@@ -16,7 +16,7 @@ const NameForm = ({ initialName }) => {
             <button
               className="btn btn-warning btn-sm"
               onClick={() => {
-                setName("");
+                setName(initialName);
               }}
             >
               Reset
