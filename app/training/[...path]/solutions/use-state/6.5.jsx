@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/src/utils/cn";
 import clsx from "clsx";
 import { Plus, Trash } from "lucide-react";
 import { useState } from "react";
@@ -122,7 +123,14 @@ export const Todos = () => {
                     }}
                   />
                 ) : (
-                  <p onClick={() => setEditingId(todo.id)}>{todo.text}</p>
+                  <p
+                    className={cn({
+                      "line-through": todo.completed,
+                    })}
+                    onClick={() => setEditingId(todo.id)}
+                  >
+                    {todo.text}
+                  </p>
                 )}
               </div>
               <button

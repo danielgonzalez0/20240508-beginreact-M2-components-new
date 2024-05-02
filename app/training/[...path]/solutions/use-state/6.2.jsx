@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/src/utils/cn";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
@@ -67,7 +68,13 @@ export const Todos = () => {
                   checked={todo.completed}
                   onChange={() => updateTodo(todo.id)}
                 />
-                <p>{todo.text}</p>
+                <p
+                  className={cn({
+                    "line-through": todo.completed,
+                  })}
+                >
+                  {todo.text}
+                </p>
               </label>
             </li>
           ))}

@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/src/utils/cn";
 import clsx from "clsx";
 import { Plus, Trash } from "lucide-react";
 import { useState } from "react";
@@ -51,7 +52,14 @@ const TodoItem = ({ todo, updateTodo, removeTodo }) => {
             onBlur={() => setIsEditing(false)}
           />
         ) : (
-          <p onClick={() => setIsEditing(true)}>{todo.text}</p>
+          <p
+            className={cn({
+              "line-through": todo.completed,
+            })}
+            onClick={() => setIsEditing(true)}
+          >
+            {todo.text}
+          </p>
         )}
       </div>
       <button className="btn btn-ghost" onClick={() => removeTodo(todo.id)}>
@@ -120,7 +128,7 @@ const Todos = () => {
 
 export default function App() {
   return (
-    <div className="flex w-full justify-center">
+    <div className="flex justify-center">
       <Todos />
     </div>
   );
