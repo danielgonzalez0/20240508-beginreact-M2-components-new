@@ -144,7 +144,7 @@ export const Todos = () => {
 
 export default function App() {
   return (
-    <div className="flex justify-center">
+    <div className="flex w-full justify-center">
       <Todos />
     </div>
   );
