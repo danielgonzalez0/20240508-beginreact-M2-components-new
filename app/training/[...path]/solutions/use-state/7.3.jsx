@@ -1,29 +1,47 @@
 "use client";
 
 import { Mail, User2 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-// eslint-disable-next-line no-unused-vars
 export const LoginForm = ({ onSubmit }) => {
-  // 🦁 Utilise 2 states pour le mail et le name
+  const emailRef = useRef(null);
+  const nameRef = useRef(null);
 
-  // 🦁 Crée une méthode "handleSubmit" qui sera passée au `onSubmit` de `form`
-  // - Commence par empêcher le comportement par défaut du formulaire
-  // - Puis appelle `onSubmit` avec un objet contenant le mail et le name
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const values = {
+      email: emailRef.current?.value,
+      name: nameRef.current?.value,
+    };
+
+    console.log({ values });
+
+    onSubmit(values);
+  };
+
   return (
-    // Ajoute la props `onSubmit`
-    <form className="flex flex-col gap-2">
+    <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-2">
       <label className="input input-bordered flex items-center gap-2">
         <Mail size={16} />
-        {/* 🦁 Contrôle cette input */}
-        <input type="text" className="grow" placeholder="email" />
+        <input
+          ref={emailRef}
+          type="email"
+          className="grow"
+          placeholder="email"
+        />
       </label>
       <label className="input input-bordered flex items-center gap-2">
         <User2 size={16} />
-        {/* 🦁 Contrôle cette input */}
-        <input type="text" className="grow" placeholder="user" />
+        <input
+          ref={nameRef}
+          minLength={3}
+          type="text"
+          className="grow"
+          placeholder="user"
+        />
       </label>
-      <button type="button" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary">
         Submit
       </button>
     </form>
@@ -35,7 +53,7 @@ export default function App() {
 
   if (user) {
     return (
-      <div className="card w-96 bg-base-100 shadow-xl">
+      <div className="card w-96 bg-base-200 shadow-xl">
         <div className="card-body">
           <h2 className="card-title">Logged in !</h2>
           <p>Email : {user.email}</p>
