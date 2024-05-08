@@ -31,13 +31,6 @@ const ShoesList = (({children})=>{
   )
 })
 
-const NewBadge = (({isNew}) => {
-  if(isNew){
-    return <div className="badge badge-secondary">NEW</div>
-  }
-  return null
-})
-
 
 const ShoeCard = ({ shoes }) => {
 
@@ -54,7 +47,7 @@ const ShoeCard = ({ shoes }) => {
       <div className="card-body">
         <h2 className="card-title">
           {title}
-          <NewBadge isNew={isNew} />
+          {isNew ? <div className="badge badge-secondary">NEW</div> : null}
         </h2>
         <p>{desc}</p>
       </div>

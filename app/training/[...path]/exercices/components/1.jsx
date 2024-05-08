@@ -31,6 +31,10 @@ const ShoesList = (({children})=>{
   )
 })
 
+const NewBadge = (()=>{
+  return <div className="badge badge-secondary">NEW</div>
+})
+
 
 const ShoeCard = ({ shoes }) => {
 
@@ -47,7 +51,7 @@ const ShoeCard = ({ shoes }) => {
       <div className="card-body">
         <h2 className="card-title">
           {title}
-          {isNew ? <div className="badge badge-secondary">NEW</div> : null}
+          {isNew ? <NewBadge/> : null}
         </h2>
         <p>{desc}</p>
       </div>
