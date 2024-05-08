@@ -23,14 +23,6 @@ const SHOES = [{
   isNew: false
 }];
 
-const ShoesList = (({children})=>{
-  return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-      {children}
-    </div>
-  )
-})
-
 
 const ShoeCard = ({ shoes }) => {
 
@@ -58,14 +50,11 @@ const ShoeCard = ({ shoes }) => {
 
 export default function App() {
   return (
-<ShoesList>
-  {SHOES.map((shoe, index) => <ShoeCard key={index} shoes={shoe} />)}
-</ShoesList>
-
-
-// {/* 🦁 Ceci est le premier composant */}
-// {/* 🦁 Tu peux le copier/coller dans un nouveau composant pour le séparer */}
- 
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {/* 🦁 Ceci est le premier composant */}
+      {/* 🦁 Tu peux le copier/coller dans un nouveau composant pour le séparer */}
+      {SHOES.map((shoe, index) => <ShoeCard key={index} shoes={shoe} />)}
+    </div>
   );
 }
 
