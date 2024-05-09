@@ -62,12 +62,21 @@ function ShoesList({ children }) {
 }
 
 function ShoeCategories({ categories }) {
-  if(categories.length === 0) return null
+  if (categories.length === 0) return null
   return (
     <div className="card-actions justify-end">
-      {categories.map((category, index) => <div key={index} className="badge badge-outline">{category}</div> )}
+      {categories.map((category, index) => <div key={index} className="badge badge-outline">{category}</div>)}
 
     </div>
+  )
+}
+
+function ShoeCart() {
+  return (
+    <label className="label cursor-pointer flex flex-col gap-1">
+      <span className="label-text">Cart</span>
+      <input type="checkbox" className="checkbox" />
+    </label>
   )
 }
 
@@ -91,7 +100,10 @@ function ShoeCard({ image, title, description, isNew = false, categories }) {
           {isNew ? <NewBadge /> : null}
         </h2>
         <p>{description}</p>
-        <ShoeCategories categories={categories} />
+        <div className="flex items-center justify-between">
+          <ShoeCategories categories={categories} />
+          <ShoeCart />
+        </div>
       </div>
     </div>
   );
