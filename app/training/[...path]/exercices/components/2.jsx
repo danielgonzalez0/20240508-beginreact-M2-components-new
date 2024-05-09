@@ -1,3 +1,33 @@
+const shoesList = [{
+  Id: 1,
+  title: "Shark Shoes",
+  src: "/images/shoes-1.png",
+  description: "This yellow shoes will make your friend jealous.",
+  isNew: true
+},
+{
+  id: 2,
+  title: "Blue Wheti",
+  src: "/images/shoes-2.png",
+  description: "You can wear this shoes with any clothes. It will make you lookcool.",
+  isNew: true
+},
+{
+  id: 3,
+  title: "Basic Fit",
+  src: "/images/shoes-3.png",
+  description: "You know what? This shoes is the best shoes for you who like to walk.",
+  isNew: false
+},
+{
+  id: 4,
+  title: "Darku Shoes",
+  src: "/images/shoes-4.png",
+  description: "Wow, this shoes is so cool. You can wear it for any occasion.",
+  isNew: false
+}];
+
+
 export default function App() {
   return (
     <ShoesList>
@@ -5,28 +35,15 @@ export default function App() {
       {/* 💡 Utilise l'IA et demande lui : "Créer un tableau pour afficher ces composants via une liste. Ne me donne que le tableau JavaScript." */}
       {/* 🦁 Le nom du tableau = shoesList */}
       {/* 💸 {shoesList.map(shoe => (...))} */}
-      <ShoeCard
-        isNew
-        image="/images/shoes-1.png"
-        title="Shark Shoes"
-        description="This yellow shoes will make your friend jealous."
-      />
-      <ShoeCard
-        isNew
-        image="/images/shoes-2.png"
-        title="Blue Wheti"
-        description="You can wear this shoes with any clothes. It will make you look cool."
-      />
-      <ShoeCard
-        image="/images/shoes-3.png"
-        title="Basic Fit"
-        description="You know what? This shoes is the best shoes for you who like to walk."
-      />
-      <ShoeCard
-        image="/images/shoes-4.png"
-        title="Darku Shoes"
-        description="Wow, this shoes is so cool. You can wear it for any occasion."
-      />
+      {shoesList.map(shoe => (
+        <ShoeCard
+          key={shoe.id}
+          image={shoe.src}
+          title={shoe.title}
+          description={shoe.description}
+          isNew={shoe.isNew}
+        />
+      ))}
     </ShoesList>
   );
 }
