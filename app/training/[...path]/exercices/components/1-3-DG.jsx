@@ -1,3 +1,5 @@
+"use client";
+
 const SHOES = [{
   title: "Shark Shoes",
   src: "/images/shoes-1.png",

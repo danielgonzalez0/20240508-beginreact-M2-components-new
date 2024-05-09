@@ -1,31 +1,41 @@
+"use client";
+
 const shoesList = [{
-  Id: 1,
+  id: 1,
   title: "Shark Shoes",
-  src: "/images/shoes-1.png",
+  image: "/images/shoes-1.png",
   description: "This yellow shoes will make your friend jealous.",
-  isNew: true
+  isNew: true,
+  categories: ["running", "casual"]
 },
 {
   id: 2,
   title: "Blue Wheti",
-  src: "/images/shoes-2.png",
-  description: "You can wear this shoes with any clothes. It will make you lookcool.",
-  isNew: true
+  image: "/images/shoes-2.png",
+  description: "You can wear this shoes with any clothes. It will make you look cool.",
+  isNew: true,
+  categories: ["formal"]
 },
 {
   id: 3,
   title: "Basic Fit",
-  src: "/images/shoes-3.png",
+  image: "/images/shoes-3.png",
   description: "You know what? This shoes is the best shoes for you who like to walk.",
-  isNew: false
+  isNew: false,
+  categories: ["casual", "outdoor"]
 },
 {
   id: 4,
   title: "Darku Shoes",
-  src: "/images/shoes-4.png",
+  image: "/images/shoes-4.png",
   description: "Wow, this shoes is so cool. You can wear it for any occasion.",
-  isNew: false
-}];
+  isNew: false,
+  categories: ["sport"]
+}
+];
+
+
+
 
 
 export default function App() {
@@ -38,10 +48,7 @@ export default function App() {
       {shoesList.map(shoe => (
         <ShoeCard
           key={shoe.id}
-          image={shoe.src}
-          title={shoe.title}
-          description={shoe.description}
-          isNew={shoe.isNew}
+          {...shoe}
         />
       ))}
     </ShoesList>
@@ -54,11 +61,21 @@ function ShoesList({ children }) {
   );
 }
 
+function ShoeCategories({ categories }) {
+  if(categories.length === 0) return null
+  return (
+    <div className="card-actions justify-end">
+      {categories.map((category, index) => <div key={index} className="badge badge-outline">{category}</div> )}
+
+    </div>
+  )
+}
+
 function NewBadge() {
   return <div className="badge badge-secondary">NEW</div>;
 }
 
-function ShoeCard({ image, title, description, isNew = false }) {
+function ShoeCard({ image, title, description, isNew = false, categories }) {
   return (
     <div className="card w-full bg-base-300 shadow-xl">
       <figure>
@@ -74,6 +91,7 @@ function ShoeCard({ image, title, description, isNew = false }) {
           {isNew ? <NewBadge /> : null}
         </h2>
         <p>{description}</p>
+        <ShoeCategories categories={categories} />
       </div>
     </div>
   );
