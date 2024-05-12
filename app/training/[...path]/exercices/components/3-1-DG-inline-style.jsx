@@ -42,15 +42,15 @@
 
 const VARIANTS = {
   red: {
-    background: "#ef444415",
+    backgroundColor: "#ef444415",
     color: "#b91c1c",
   },
   green: {
-    background: "#22c55e15",
+    backgroundColor: "#22c55e15",
     color: "#15803d",
   },
   purple: {
-    background: "#8b5cf615",
+    backgroundColor: "#8b5cf615",
     color: "#6d28d9",
   },
 };
@@ -69,6 +69,7 @@ const COMMON_STYLES = {
   alignItems: "center",
   borderRadius: "6px",
   fontWeight: "500",
+  fontSize: "14px",
   width: "fit-content",
 };
 
