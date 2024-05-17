@@ -19,15 +19,15 @@ const Button = ({ children, variant, id }) => {
 };
 
 export default function App() {
+
+  const handleClick = (e) => {
+    if (e.target === e.currentTarget) return alert("You clicked on the container");
+    return alert(`You clicked on <${e.target.id}>`);
+  }
+
   return (
     <div
-      // 🦁 Rajoute un `onClick` avec un arrow function
-      // 💡 (e) => {...}
-      // Récupère l'id de l'élément cliqué avec `target`
-      // Si `target` === `currentTarget` = container
-      // Sinon = id de l'élément cliqué
-      // Affiche une `alert` avec `alert`
-      className="flex flex-wrap gap-4 p-4"
+      className="flex flex-wrap gap-4 p-4" onClick={(e) => handleClick(e)}
     >
       <Button variant={"primary"} id="eat-me">
         Eat me
