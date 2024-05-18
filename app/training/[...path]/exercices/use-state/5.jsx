@@ -3,13 +3,18 @@
 import { User2 } from "lucide-react";
 import { useState } from "react";
 
-function NameForm() {
+function NameForm({ initialName = "" }) {
   // 🦁 Ajoute un `useState` pour le nom
   // 💡 useState("")
-  const [name, setName] = useState('')
+  const [name, setName] = useState(initialName)
   const handleChangeName = (e) => {
     setName(e.target.value)
   }
+
+  const resetName = () => {
+    setName(initialName)
+  }
+
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -17,6 +22,7 @@ function NameForm() {
         <div className="card-body items-center text-center">
           <h2 className="card-title">Name :</h2>
           {name ? <p>{name}</p> : <p className="text-error">No name</p>}
+          {name !== initialName && <button className="btn btn-warning btn-sm" onClick={() => resetName()}>Reset</button>}
         </div>
       </div>
       <div className="divider">Form</div>
