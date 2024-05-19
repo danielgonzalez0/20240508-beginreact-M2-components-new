@@ -1,17 +1,20 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 "use client";
 
-import { Plus } from "lucide-react";
+import useTodos from "@/src/hooks/useTodos";
+import { cn } from "@/src/utils/cn";
+import { Plus, Trash } from "lucide-react";
+import { useState } from "react";
 
 export const Todos = () => {
-  // 🦁 Ajoute deux états :
-  //    - `todos` : un tableau vide
-  //    - `todo` : une chaîne de caractères vide
 
-  // 🦁 Crée une méthode `addTodo` qui ajoute un todo
-  // 💡 Un todo est un objet avec 3 propriétés :
-  //    1. `id` : un identifiant unique (💡 utilise `Date.now()`)
-  //    2. `text` : le texte du todo
-  //    3. `completed` : un booléen qui indique si le todo est complété (💡 `false` par défaut)
+  const [todo, setTodo] = useState("");
+  const {todos, removeTodo, toggleTodoCheck, addTodo} = useTodos();
+
+  const handleAddTodo = (text) => {
+addTodo(text);
+setTodo("");
+  }
 
   return (
     <div className="card w-full max-w-md border border-base-300 bg-base-200 shadow-xl">
@@ -25,10 +28,15 @@ export const Todos = () => {
               className="checkbox checkbox-sm"
             />
             {/* 🦁 Ajoute un état "Todo" et contrôle l'input */}
-            <input type="text" className="grow" placeholder="Some task" />
+            <input type="text" className="grow" placeholder="Some task" value={todo}
+              onChange={(e) => setTodo(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleAddTodo(todo)
+              }}/>
+            
           </label>
           {/* 🦁 Lors du clic sur le bouton, appelle la méthode "addTodo" */}
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={() => handleAddTodo(todo)}>
             <Plus size={22} />
           </button>
         </div>
@@ -36,12 +44,16 @@ export const Todos = () => {
         <ul className="space-y-2">
           {/* Voici un exemple d'un élément "Todo" */}
           {/* Tu dois afficher ces éléments avec une liste en utilisant `.map` */}
-          <li className="flex w-full items-center gap-2">
+          {todos?.map((todo) => <li className="flex w-full items-center gap-2" key={todo.id}>
             <label className="input input-bordered flex flex-1 items-center gap-2">
-              <input type="checkbox" className="checkbox checkbox-sm" />
-              <p>Todo demo</p>
+              <input type="checkbox" className="checkbox checkbox-sm" checked={todo.completed} onChange={() => toggleTodoCheck(todo.id)} />
+              <p className={cn({"line-through text-neutral-content": todo.completed})}>{todo.text}</p>
             </label>
-          </li>
+            <button className="btn btn-ghost" onClick={()=>removeTodo(todo.id)}>
+              <Trash size={16} />
+            </button>
+          </li>)}
+          {todos.length === 0 ? <p className="text-neutral-content">Empty</p> : null}
         </ul>
       </div>
     </div>
