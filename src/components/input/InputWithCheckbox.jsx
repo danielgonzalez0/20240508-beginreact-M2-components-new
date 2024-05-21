@@ -1,8 +1,6 @@
+import React from 'react';
 
-
-const TodoInput = ({ initialtext = "", checked = false, children, ...props }) => {
-
-
+const InputWithCheckbox = ({children, checked=false}) => {
   return (
     <div className="input input-bordered flex flex-1 items-center gap-2">
       <input
@@ -11,13 +9,9 @@ const TodoInput = ({ initialtext = "", checked = false, children, ...props }) =>
         className="checkbox checkbox-sm"
       />
       {/* 🦁 Ajoute un état "Todo" et contrôle l'input */}
-      <input type="text" className="grow" placeholder="Some task" value={initialtext}
-        {...props}>
-        {children}
-      </input>
-
+      {children}
     </div>
   );
 };
 
-export default TodoInput;
+export default InputWithCheckbox;

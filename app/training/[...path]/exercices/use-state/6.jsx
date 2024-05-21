@@ -1,9 +1,9 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 "use client";
 
-import TodoInput from "@/src/components/todoInput";
+import Todo from "@/src/components/input/Todo";
+import TodoInput from "@/src/components/input/TodoInput";
 import useTodos from "@/src/hooks/useTodos";
-import { cn } from "@/src/utils/cn";
 import { Plus, Trash } from "lucide-react";
 import { useState } from "react";
 
@@ -38,18 +38,14 @@ export const Todos = () => {
           {/* Voici un exemple d'un élément "Todo" */}
           {/* Tu dois afficher ces éléments avec une liste en utilisant `.map` */}
           {todos?.map((todo) => <li className="flex w-full items-center gap-2" key={todo.id}>
-            <div className="input input-bordered flex flex-1 items-center gap-2" >
-              < input type="checkbox" className="checkbox checkbox-sm" checked={todo.completed} onChange={() => toggleTodoCheck(todo.id)} />
-              {editingId !== todo.id || editingId === null ?
-                <p className={cn({ "line-through text-neutral-content": todo.completed })} onClick={(e) => {
-                  e.preventDefault();
-                  console.log("click", todo.id);
-                  setEditingId(todo.id)
-                }}>{todo.text}</p>
-                :
-                <input type="text" className="grow" value={todo.text} onChange={(e) => updateTodo(todo.id, e.target.value)} onBlur={() => { setEditingId(null) }} autoFocus={true}
-                />}
-            </div>
+            <Todo 
+            todo={todo} 
+            id={editingId} 
+            onCheckboxChange={() => toggleTodoCheck(todo.id)} 
+            onTextClick={() => setEditingId(todo.id)} 
+            onChange={(e) => updateTodo(todo.id, e.target.value)} 
+            onBlur={() => { setEditingId(null) }} />
+
             <button className="btn btn-ghost" onClick={() => removeTodo(todo.id)}>
               <Trash size={16} />
             </button>
