@@ -1,3 +1,5 @@
+/* eslint-disable tailwindcss/classnames-order */
+/* eslint-disable tailwindcss/no-custom-classname */
 "use client";
 
 import { User2 } from "lucide-react";
@@ -27,7 +29,9 @@ function NameForm({ initialName = "" }) {
       </div>
       <div className="divider">Form</div>
       <label className="input input-bordered flex items-center gap-2">
-        <User2 size={16} />
+        <
+// @ts-ignore
+        User2 size={16} />
         <input type="text" className="grow" placeholder="Melvynx" onChange={(e) => handleChangeName(e)} />
       </label>
     </div>

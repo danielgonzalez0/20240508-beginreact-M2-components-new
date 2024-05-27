@@ -9,30 +9,31 @@ import { useState } from "react";
 // @ts-ignore
 export const LoginForm = ({ onSubmit }) => {
 
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('mail');
-    const userName = formData.get('username');
-    const newUser = { email, name: userName };
+    const newUser = { email, name: username };
     onSubmit(newUser);
+
   }
   return (
     // Ajoute la props `onSubmit`
     <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
       <label className="input input-bordered flex items-center gap-2 has-[:invalid]:input-error">
         <
-// @ts-ignore
-        Mail size={16} />
+          // @ts-ignore
+          Mail size={16} />
         {/* 🦁 Contrôle cette input */}
-        <input type="email" className="grow" placeholder="email" name="mail"/>
+        <input type="email" className="grow" placeholder="email" name="mail" value={email} onChange={(e) => setEmail(e.target.value)} />
       </label>
       <label className="input input-bordered flex items-center gap-2 has-[:invalid]:input-error">
         <
-// @ts-ignore
-        User2 size={16} />
+          // @ts-ignore
+          User2 size={16} />
         {/* 🦁 Contrôle cette input */}
-        <input type="text" minLength={3} className="grow" placeholder="user" name="username"/>
+        <input type="text" minLength={3} className="grow" placeholder="user" name="username" value={username} onChange={e => setUsername(e.target.value)} />
       </label>
       <button type="submit" className="btn btn-primary">
         Submit
@@ -68,9 +69,9 @@ export default function App() {
   }
   return (
     <div className="flex justify-center">
-      <LoginForm
-        onSubmit={(values)=>setUser(values)}
-    />
+      <LoginForm onSubmit = {(values)=>{
+        setUser(values);
+      }}/>
     </div>
   );
 }
