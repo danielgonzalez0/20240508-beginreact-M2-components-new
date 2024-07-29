@@ -7,11 +7,46 @@ import clsx from "clsx";
 import { Mail, User2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 // eslint-disable-next-line no-unused-vars
 // @ts-ignore
 export const LoginForm = ({ onSubmit }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
+
+
+ const  product = {
+    name: "Melvyn",
+    prices: [
+      {
+        type: "one-time",
+        value: 10,
+        currency: "EUR"
+      },
+      {
+        type: "multiple-time",
+        value: 5,
+        currency: "EUR",
+        times: 2
+      }
+    ],
+    stock: 10,
+  }
+
+
+  // 🦁 Créer un schéma pour valider un "product"
+  const productSchema = z.object({
+    name: z.string(),
+    prices: z.array(z.object({
+      type: z.string(),
+      value: z.number(),
+      currency: z.string(),
+      times: z.number().optional()
+    }
+    ))
+  })
+
+  console.log("test product", productSchema.parse(product));
 
 
   const handleFormSubmit = (data, e) => {
