@@ -1,6 +1,7 @@
 "use client";
 
-import { User2, X } from "lucide-react";
+import {User2} from "lucide-react";
+import { X } from "lucide-react";
 import {
   cloneElement,
   createContext,
@@ -9,6 +10,9 @@ import {
   useRef,
   useState,
 } from "react";
+
+console.log(User2, X);
+
 
 const DialogContext = createContext(null);
 
@@ -206,12 +210,16 @@ export default function App() {
         <DialogContent>
           <DialogClose>
             <button className="absolute right-4 top-4 flex size-6 items-center justify-center rounded-lg bg-base-100">
-              <X size={12} />
+              <
+// @ts-ignore
+              X size={12} />
             </button>
           </DialogClose>
           <p>What is your name ?</p>
           <label className="input input-bordered flex items-center gap-2">
-            <User2 scale={16} />
+            <
+// @ts-ignore
+            User2 scale={38} />
             <input type="text" className="grow" placeholder="Username" />
           </label>
           <div className="card-actions">
