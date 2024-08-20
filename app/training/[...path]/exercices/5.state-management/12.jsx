@@ -1,6 +1,8 @@
 "use client";
 
+import { X } from "lucide-react";
 import { User2 } from "lucide-react";
+import { cloneElement } from "react";
 import { useContext } from "react";
 import { createContext } from "react";
 import { useState } from "react";
@@ -14,9 +16,9 @@ const DialogContext = createContext(null);
 // ❌ Si le contexte renvoie null, on va renvoyer une erreur
 // ✅ Sinon on va renvoyer le contexte
 
-const useDialogContext = ()=> {
+const useDialogContext = () => {
   const context = useContext(DialogContext);
-  if(!context) {
+  if (!context) {
     throw new Error("useDialogContext must be used within a dialog provider");
   }
   return context;
@@ -28,16 +30,16 @@ const Dialog = ({ children }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <DialogContext.Provider value={{open, setOpen}}>
-        {children}
+    <DialogContext.Provider value={{ open, setOpen }}>
+      {children}
     </DialogContext.Provider>
   );
 };
 
 // 🦁 Enlève les props et utilise `useDialogContext` pour récupérer le contexte
 const DialogContent = ({ children }) => {
-  
-  const {open} = useDialogContext()
+
+  const { open } = useDialogContext()
   if (!open) return null;
 
   return (
@@ -51,12 +53,23 @@ const DialogContent = ({ children }) => {
   );
 };
 
+
 // 🦁 Crée un component DialogTrigger qui prend comme props children
 // Celui-ci va contenir le bouton avec un onClick qui va mettre à jour le state `open`
 // Utilise `useDialogContext` pour récupérer le contexte `DialogContext`
 
 const DialogTrigger = ({ children }) => {
   const { setOpen } = useDialogContext();
+  if (typeof children !== "string") {
+    return cloneElement(children, {
+      onClick: (e) => {
+        setOpen(true)
+        children.props.onClick?.(e)
+      }
+    });
+  }
+
+
   return <button className="btn" onClick={() => setOpen(true)}>{children}</button>;
 }
 
@@ -64,8 +77,16 @@ const DialogTrigger = ({ children }) => {
 // Celui-ci va contenir le bouton avec un onClick qui va mettre à jour le state `open`
 // Utilise `useDialogContext` pour récupérer le contexte `DialogContext`
 
-const DialogClose = ({children }) => {
+const DialogClose = ({ children }) => {
   const { setOpen } = useDialogContext();
+  if (typeof children !== "string") {
+    return cloneElement(children, {
+      onClick: (e) => {
+        setOpen(false)
+        children.props.onClick?.(e)
+      }
+    });
+  }
   return <button className="btn" onClick={() => setOpen(false)}>{children}</button>;
 }
 
@@ -74,20 +95,28 @@ export default function App() {
     <div>
       {/* 🦁 Mets ensemble nos components pour avoir un Dialog fonctionnel */}
       <Dialog>
-        <DialogTrigger>Open Dialog</DialogTrigger>
+        <DialogTrigger>
+          <button className="btn btn-primary btn-lg" onClick={() => console.log('click')}>Open Dialog Now!</button>
+        </DialogTrigger>
         <DialogContent>
-        <p>What is your name ?</p>
-        <label className="input input-bordered flex items-center gap-2">
-          <
+          <p>What is your name ?</p>
+          <label className="input input-bordered flex items-center gap-2">
+            <
+              // @ts-ignore
+              User2 scale={16} />
+            <input type="text" className="grow" placeholder="Username" />
+          </label>
+          <div className="card-actions">
+            {/* 🦁 Ajoute le bouton "Cancel" */}
+            <button className="btn btn-primary">Submit</button>
+            <DialogClose>
+              <button className="absolute right-4 top-4 flex size-6 items-center justify-center rounded-lg bg-base-100">
+                <
 // @ts-ignore
-          User2 scale={16} />
-          <input type="text" className="grow" placeholder="Username" />
-        </label>
-        <div className="flex gap-2">
-          {/* 🦁 Ajoute le bouton "Cancel" */}
-          <DialogClose>Cancel</DialogClose>
-          <button className="btn btn-primary">Submit</button>
-        </div>
+                X size={12} />
+              </button>
+            </DialogClose>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
