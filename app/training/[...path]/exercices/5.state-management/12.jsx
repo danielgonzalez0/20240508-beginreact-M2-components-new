@@ -3,7 +3,6 @@
 import { X } from "lucide-react";
 import { User2 } from "lucide-react";
 import { useEffect } from "react";
-import { act } from "react";
 import { useRef } from "react";
 import { cloneElement } from "react";
 import { useContext } from "react";
@@ -36,7 +35,7 @@ const useEventListener = ({
 
   // 🦁 Créer un `useRef` qui stocke la référence de `handler` = ref stable
   const handlerRef = useRef(handler);
-  //créer un useEffect qui met à jour la ref avec le handler => ce met à jour à chaque fois que le handler change
+  //créer un useEffect qui met à jour la ref avec le handler => se met à jour à chaque fois que le handler change
   //mais cout tres faible car on ne fait que mettre à jour la ref
   useEffect(() => {
     handlerRef.current = handler;
@@ -91,25 +90,25 @@ const useFocusTrap = (ref, isEnabled) => {
     eventName: "keydown",
     handler: (e) => {
 
-if (e.key !== "Tab") return
-//tableau des éléments focusables
-const focusableElements = getFocusableElements(ref);
-//récupération de l'élément focus
-const actualFocus = document.activeElement;
-//récupération de l'index de l'élément focus 
-const actualFocusIndex = focusableElements.indexOf(actualFocus);
-// en fonction de la touche shift on va determiner l'index de l'élément suivant
-// +1 si on va vers l'avant et -1 si on va vers l'arrière
-let nextActiveElementIndex = e.shiftKey ? actualFocusIndex - 1 : actualFocusIndex + 1;
-//on cherche l'élément suivant dans le tableau
-const elementToFocus = focusableElements[nextActiveElementIndex];
-//si on trouve l'élément comportement normal du va qui va focus sur l'élément
-if (elementToFocus) return
-//sinon on va focus sur le premier élément du tableau si index négatif et sur le dernier si index positif
- nextActiveElementIndex = nextActiveElementIndex < 0 ? focusableElements.length - 1 : 0;
-focusableElements[nextActiveElementIndex]?.focus();
-//on empêche le comportement par défaut
-e.preventDefault();
+      if (e.key !== "Tab") return
+      //tableau des éléments focusables
+      const focusableElements = getFocusableElements(ref);
+      //récupération de l'élément focus
+      const actualFocus = document.activeElement;
+      //récupération de l'index de l'élément focus 
+      const actualFocusIndex = focusableElements.indexOf(actualFocus);
+      // en fonction de la touche shift on va determiner l'index de l'élément suivant
+      // +1 si on va vers l'avant et -1 si on va vers l'arrière
+      let nextActiveElementIndex = e.shiftKey ? actualFocusIndex - 1 : actualFocusIndex + 1;
+      //on cherche l'élément suivant dans le tableau
+      const elementToFocus = focusableElements[nextActiveElementIndex];
+      //si on trouve l'élément comportement normal du va qui va focus sur l'élément
+      if (elementToFocus) return
+      //sinon on va focus sur le premier élément du tableau si index négatif et sur le dernier si index positif
+      nextActiveElementIndex = nextActiveElementIndex < 0 ? focusableElements.length - 1 : 0;
+      focusableElements[nextActiveElementIndex]?.focus();
+      //on empêche le comportement par défaut
+      e.preventDefault();
     },
     enabled: isEnabled
   });
