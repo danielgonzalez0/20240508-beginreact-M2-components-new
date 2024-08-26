@@ -2,6 +2,8 @@
 
 import { cn } from "@/src/utils/cn";
 import { Check, ShoppingBasket } from "lucide-react";
+import { useContext } from "react";
+import { createContext } from "react";
 import { useState } from "react";
 
 // 🦁 Créer un context avec les informations suivant :
@@ -9,14 +11,49 @@ import { useState } from "react";
 // - `onDeleteItem` : une fonction qui va supprimer un item
 // - `onAddItem` : une fonction qui va ajouter un item dans le panier
 
+const ShoppingContext = createContext(null)
+
+const useShoppingContext = () => {
+  const context = useContext(ShoppingContext);
+  if (!context) {
+    throw new Error("useShoppingContext must be used within a shopping provider");
+  }
+  return context;
+}
+
+const ShoppingProvider = ({ children }) => {
+  const [items, setItems] = useState([]);
+
+  const onDeleteItem = (selectedItem) => {
+    setItems((prevItems) => prevItems.filter((i) => i.id !== selectedItem.id));
+  }
+  const onAddItem = (selectedItem) => {
+    setItems((prevItems) => [...prevItems, selectedItem]);
+  }
+
+  const isSelected = (selectedItem) => { 
+    return items.some((item) => item.id === selectedItem.id) }
+
+  const value = { items, onDeleteItem, onAddItem, isSelected };
+
+  return <ShoppingContext.Provider value={value}>
+    {children}
+  </ShoppingContext.Provider>
+
+}
+
+
 // 🦁 Supprime les imports et utilise le context
-const Header = ({ items, onDeleteItem }) => {
+const Header = () => {
+  const { items, onDeleteItem } = useShoppingContext();
   return (
     <div className="flex items-center justify-between rounded-lg border border-neutral/40 bg-base-200 px-8 py-4 shadow-lg">
       <h2 className="text-2xl font-bold">Shoes</h2>
       <div className="dropdown">
         <button tabIndex={0} className="btn btn-secondary m-1">
-          <ShoppingBasket size={16} /> {items.length}
+          <
+            // @ts-ignore
+            ShoppingBasket size={16} /> {items.length}
         </button>
         <div
           tabIndex={0}
@@ -57,44 +94,38 @@ const Header = ({ items, onDeleteItem }) => {
 };
 
 export default function App() {
-  // 🦁 Déplace le state dans un context
-  const [items, setItems] = useState([]);
 
   return (
-    <div className="flex flex-col gap-8">
-      <Header
-        // 🦁 Enlève les props
-        onDeleteItem={(item) => {
-          setItems((prevItems) => prevItems.filter((i) => i.id !== item.id));
-        }}
-        items={items}
-      />
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {SHOES.map((shoe) => (
-          <ShoeCard
-            // 🦁 Enlève les props
-            isSelected={items.some((item) => item.id === shoe.id)}
-            onShoppingBasketClick={() => {
-              console.log("click", shoe);
-              if (items.some((item) => item.id === shoe.id)) {
-                setItems((prevItems) =>
-                  prevItems.filter((item) => item.id !== shoe.id)
-                );
-              } else {
-                setItems((prevItems) => [...prevItems, shoe]);
-              }
-            }}
-            key={shoe.id}
-            shoe={shoe}
-          />
-        ))}
+    <ShoppingProvider>
+      <div className="flex flex-col gap-8">
+        <Header />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {SHOES.map((shoe) => (
+            <ShoeCard
+              key={shoe.id}
+              shoe={shoe}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </ShoppingProvider>
   );
 }
 
-const ShoeCard = ({ shoe, isSelected = false, onShoppingBasketClick }) => {
+const ShoeCard = ({ shoe }) => {
   // 🦁 Utilise le context pour récupérer le state `isSelected` ainsi que `onAddItem` et `onDeleteItem`
+  const { isSelected, onAddItem, onDeleteItem } = useShoppingContext();
+  const isShoeSelected = isSelected(shoe);
+
+  const onShoppingBasketClick = () => {
+    console.log("click", shoe);
+    if (isShoeSelected) {
+      onDeleteItem(shoe);
+    } else {
+      onAddItem(shoe);
+    }
+  }
+
   return (
     <div className="card flex w-full bg-base-300 shadow-xl">
       <figure>
@@ -109,14 +140,18 @@ const ShoeCard = ({ shoe, isSelected = false, onShoppingBasketClick }) => {
         <div className="card-actions flex w-full items-end justify-end">
           <button
             // En fonction de `useSelected` on ajoutera ou supprimera du panier
-            onClick={onShoppingBasketClick}
+            onClick={()=> onShoppingBasketClick()}
             className={cn("btn", {
-              "btn-outline": isSelected,
-              "btn-primary": !isSelected,
+              "btn-outline": isShoeSelected,
+              "btn-primary": !isShoeSelected,
             })}
           >
-            <ShoppingBasket size={16} />{" "}
-            {isSelected ? <Check size={16} /> : null}
+            <
+              // @ts-ignore
+              ShoppingBasket size={16} />{" "}
+            {(isShoeSelected) ? <
+              // @ts-ignore
+              Check size={16} /> : null}
           </button>
         </div>
       </div>
@@ -129,21 +164,21 @@ const SHOES = [
   {
     name: "Air Max Plus",
     id: 1,
-    cover: "/nikes/air-max-plus.jpeg",
+    cover: "/images/shoes-1.png",
   },
   {
     name: "Air Force",
     id: 2,
-    cover: "/nikes/air-force.png",
+    cover: "/images/shoes-2.png",
   },
   {
     name: "Dunk Retro",
     id: 3,
-    cover: "/nikes/dunk-retro.png",
+    cover: "/images/shoes-3.png",
   },
   {
     name: "Air Max",
     id: 4,
-    cover: "/nikes/air-max.png",
+    cover: "/images/shoes-4.png",
   },
 ];
